@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="js/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/utils/Draggable.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+
+</head>
+<body>
+
+
+
+
+
+	<div id="bg">
+
+		<div id="gradient"></div>
+
+
+
+	</div>
+
+
+
+	<div class="header">
+
+
+		<div id="title-website">
+			<p id="titre-veiller"> veiller</p>
+			<p id="title-nuit" class="title">A LA FIN DU JOUR
+				<br>OUT OF BLUE.AT DAY'S CLOSE
+			</p>
+		</div>
+
+			<div class="container-horloge" >
+				<svg id="horloge" viewBox="0 0 40 40">
+					<line class="hour" x1="0" y1="0" x2="8" y2="0" />
+					<line class="minute" x1="0" y1="0" x2="12" y2="0" />
+					<!--<line class="seconds" x1="0" y1="0" x2="16" y2="0"  />-->
+				</svg>
+			</div>
+
+			<div class="gamme-couleur">
+				<div id="blue"></div><div id="beige"></div><div id="beige2"></div><div id="orange"></div><div id="rouge"></div><div id="bronze"></div>
+			</div>
+
+			<div class="heure-temp">
+				<div> <span id="horaire">20:00</span> <br> <span id="tempK">5000 K</span></div>
+			</div>
+
+
+
+
+			<svg id="schema-temp" version="1.1" viewBox="-10 -10 1800 290" class="svg-content">
+			<g id="drag">
+				<circle class="oval" cx="15" cy="15" r="15" />
+			</g>
+			<!--<polyline points="5 264,445 264,593 44,1186 44,1483 220,1631 220, 1780 264"/>-->
+
+			<!--<path stroke="white" d="M0,50 Q0,20 101,40 Q100,0 120,40, 300">
+			-->
+
+			<path id="path" d="M0,241.67h324.31c8.31,0,16.05-4.26,20.5-11.28l72.7-114.79c4.45-7.02,12.18-11.28,20.5-11.28h105.73
+	c8.13,0,15.72-4.07,20.22-10.85l54.51-82.13c4.5-6.77,12.09-10.85,20.22-10.85h647.18c5.68,0,11.18,1.99,15.54,5.63l130.13,108.59
+	c4.36,3.64,9.86,5.63,15.54,5.63h126.01c5.7,0,11.22,2.01,15.59,5.67l97.13,107.63c4.6,5.1,11.15,8.01,18.01,8.01h22.7">
+
+
+
+
+			</path>
+		</svg>
+
+	</div>
+
+<main>
+	<div id="fond_nuit"> </div>
+
+	<div class="grid-container">			
+
+		<div class="grid-general" id="grid-item2">
+			
+			<div id="notes">
+    		<h2 class="visually-hidden" id="footnote-label">Footnotes</h2>
+    		<ol>
+				<li id="playbour"> PLAYBOUR <i>Médium</i>, Vol.41, N°4, 2014 <a href="#css-ref" aria-label="Back to content">↩</a></li>
+
+      			<li id="henrot">«&nbspEn anglais, la racine latine <i>exhaust</i> (du verbe exhaurire, ex [hors de] et haurire [drainer]) renvoie tant à l’exhaustivité qu’à l’épuisement – de <i>exhaustive</i> (exhaustif) et <i>exhaustiveness</i> (exhaustivité), à <i>exhausted</i> (épuisé) et <i>exhaustion</i> (épuisement).&nbsp» Cette relation entre exhaustivité et épuisement est décrite par Raphaëlle Cormier dans «&nbspGrosse fatigue, l'ambitieux projet de Camille Henrot. Du sentiment d'exhaustivité à l'épuisement le plus complet, une encyclopédie cosmogonique&nbsp», publié dans le cahier Bertrand Gervais dir., «&nbspÉléments d'une esthétique de l'épuisement&nbsp», <i>Cahiers de recherche, Archiver le présent?</i>, 1, 2019 <a href="https://archiverlepresent.org/article-cahier/grosse-fatigue-lambitieux-projet">[en ligne]</a><a href="#footnotes-ref" aria-label="Back to content">↩</a></li>
+      
+      			<li id="merzeau"> Louise Merzeau, «&nbspLe flâneur impatient&nbsp», <i>Médium</i>, Vol.41, N°4, 2014&nbsp<a href="#css-ref" aria-label="Back to content">↩</a></li>
+
+      			<li id="hu"> Tung-Hui Hu, <i>Digital lethargy: dispatches from an age of disconnection</i>, The MIT Press, 2022&nbsp<a href="#css-ref" aria-label="Back to content">↩</a></li>
+
+     			<li id="rabinbach">Anson Rabinbach, <i>The human motor: energy, fatigue, and the origins of modernity</i>, Univ. of California Press, 1992&nbsp<a href="#css-counters-ref" aria-label="Back to content">↩</a></li>
+
+     			<li id="sterne">Jonathan Sterne, <i>Diminished faculties: a political phenomenology of impairment</i>, Duke University Press, 2021&nbsp<a href="#css-counters-ref" aria-label="Back to content">↩</a></li>
+
+     			<li id="cnrtl"> Centre National de Ressources Textuelles et Lexicales, <a href="https://www.cnrtl.fr/etymologie/veiller">[en ligne]</a><a href="#css-counters-ref" aria-label="Back to content">↩</a></li>
+
+     			<li id="jagoda">Patrick Jagoda, <i>Network aesthetics</i>, University of Chicago Press, 2016&nbsp<a href="#css-counters-ref" aria-label="Back to content">↩</a></li>
+
+     			<li id="mills">Mara Mills et Jonathan Sterne, «&nbspAfterword II: Dismediation—Three Proposals, Six Tactics&nbsp», dans Elizabeth Ellcessor et Bill Kirkpatrick éds., <i>Disability Media Studies</i>NYU Press, 2017, p.365-378&nbsp<a href="#css-counters-ref" aria-label="Back to content">↩</a></li>
+     		</ol>
+  			</div>
+
+			<p class="quote"> Cette définition du terme «&nbspveiller&nbsp» est le prolongement de précédentes tentatives de circonscription des états de veille numériques et de leur culture matérielle. Initiées au sein de la performance Grèves Perlées, ces recherches ont ensuite été approfondies à l’occasion d’un article sur les flux vidéos de sommeil, <a href="https://aoc.media/analyse/2023/09/27/les-flux-videos-de-sommeil-sismographes-des-etats-de-veille-numeriques/">publié par AOC</a>, le 29 septembre 2023. </p>
+
+			<p class="quote"> Cette proposition s’accompagne du site internet <i>out of blue, at day’s close</i>. Ce dernier détourne les mécanismes des logiciels qui modifient la température de couleur de nos écrans pour les rendre moins agressifs à nos yeux, tels que F.Lux ou Nightshift, afin de conditionner l'accès au contenu. Le texte se dévoile à la tombée du jour, à mesure que les couleurs tirent sur des oranges et des rouges. Ces outils informatiques qui sont habituellement utilisés pour monitorer l’activité en ligne et négocier nos performances, sont ici déplacés pour interroger une certaine conditionnalité et érosion d’internet. 
+ 			<br>Habituellement dissimulés par les mécaniques algorithmiques et les interfaces graphiques, la co-présence des internautes est rendue visible par un rayon orangé, qui s'élargit proportionnellement au nombre de personnes connecté·es. Plus il y a d’internautes présent·e·s sur le site internet, plus la largeur du rayon augmente ; rendant la lecture plus aisée à mesure qu’elle est partagée. Durant la nuit, les pixels s’éteignent. Si le contenu n’est plus accessible, l’espace laisse cependant figurer la présence des utilisateur·trice·s, donnant à voir une certaine carte de l’éveil.
+ 			</p>
+
+ 			<p class="quote">Merci aux fabuleuses typothèques <a href="https://typotheque.genderfluid.space/index.html">Bye Bye Binary</a> & <a href="https://typotheque.genderfluid.space/index.html">League of Moveable Type</a> pour les caractères : <br>
+ 			Baskervool, Bye Bye Binary <br>
+ 			Amiamie, par Mirat Masson <br>
+ 			League Script #1, League of Moveable Type
+
+			<p class="quote">Merci à Alice Ricci & Loïc Horelloux <br> pour leur aide précieuse <br>dans la conception de ce site internet.</p>	
+
+			</div>
+
+			<div class="grid-general" id="grid-item3">
+
+				<article>
+				<p class="quote" id="definition">Les mécanismes du «&nbspplaybour&nbsp»<a href="#playbour" aria-describedby="footnote-label" id="footnotes-ref" ></a>, de la contraction entre jouer (<i>play</i>) et travail (<i>labour</i>), produisent un environnement numérique frénétique, qui demande en permanence une réaction ou une interaction. Dans la vidéo <i>Grosse Fatigue</i>, l’artiste Camille Henrot exprime cette relation entre exhaustivité et épuisement<a href="#henrot" aria-describedby="footnote-label" id="footnotes-ref"></a>. L’accumulation visuelle et sonore entremêle plusieurs cadences, permettant de nous confronter à l’arythmie de nos prothèses technologiques. Selon Louise Merzeau, «&nbspnous consacrons de plus en plus d’énergie à négocier des changements de cadence, des variations rythmiques ou des irrégularités pour rendre habitable le temps des machines <a href="#merzeau" aria-describedby="footnote-label" id="footnotes-ref"></a>&nbsp». Ces technologies prennent tout autant le pouls de nos actions, que celui de nos absences et de nos hésitations. Même le non-choix est devenu une forme de donnée. Notre expérience en ligne est ponctuée de ces moments d’attente et de décisions repoussées à plus tard, à l’image des onglets de navigation qui ne sont jamais fermés et les messages non-lus qui ne sont jamais ouverts. Cette vulnérabilité de nos expériences en ligne, où même la non-action est valorisée, semble mettre en avant l’importance de ces états de veille dans notre expérience en ligne et hors-ligne. </p>
+
+				<p class="quote" id="definition"> Veiller définit un état transitoire et passager qui n’est ni le sommeil ni l’éveil. Les états de veille peuvent s’apparenter à la «&nbspléthargie numérique&nbsp<a href="#hu" aria-describedby="footnote-label" id="footnotes-ref"></a>» décrite par le philosophe et poète Tung-Hu Hui (2022). L’expérience de la léthargie est celle de l'attente et du temps-mort, résultant d’une forme d’endurance et de persévérance plutôt que par la résolution d'une crise ou sa réparation. Nos états de veille permettent ainsi d’envisager la question de la fatigue, au-delà de la question énergétique. Anson Rabinbach a bien montré que la fatigue a surtout été décrite selon des principes de gestion des corps et de l'économie. Mais, comme le rappelle Jonathan Sterne, pour le «&nbspsujet chroniquement fatigué, la fatigue n’est pas une absence d’énergie : elle est une présence<a href="#sterne" aria-describedby="footnote-label" id="footnotes-ref"></a>&nbsp». La fatigue qui s’exprime alors est loin d’être un seul état d’inaction, où l'on est trop fatigué pour faire quoi que ce soit. Faire l’expérience de la léthargie, se mettre dans un état de veille, rend possible une suspension de la réflexivité : dans l’attente d’être rechargé, redynamisé. Cette impulsion pourrait ne jamais arriver ; mais c'est l’expérience collective de l'attente et d’une certaine vulnérabilité, qui imprègne ces états de veille de leur potentialité.  </p>
+
+				<p class="quote" id="definition"> Veiller invite à une exploration spéculative de l’importance du soin pour penser et vivre dans des mondes plus-qu’humains. L’étymologie du terme «&nbspveiller&nbsp» provient du latin <i>vigilare</i>, qui signifie «&nbspêtre éveillé, être sur ses gardes, attentif ». Partageant la même racine que <i>vigil</i>, «&nbspgarde de nuit, veilleur&nbsp»<a href="#cnrtl" aria-describedby="footnote-label" id="footnotes-ref"></a>, il induit une présence d'un regard extérieur. C’est toute l'ambivalence de la veille, un terme qui désigne à la fois un état d’inaction, de retrait ou de repos, et un état d’attention accru, à la limite entre la surveillance et la bienveillance. Veiller ou être en veille n’est pas un retrait intérieur ou l’abandon de toute sociabilité, mais plutôt l’exercice d’une responsabilité collective : pour que quelqu’un dorme, il faut que quelqu’un·e veille. Nous veillons sur une plante en germination ou sur un volcan endormi, sur un nourrisson ou une personne décédée. En ligne, les états de veille se nichent dans les marges des vidéos d’ASMR et des flux vidéos de sommeil (<i>sleeplive streams</i>). Ces espaces-temps en ligne deviennent les points de rendez-vous d’internautes distribués et atomisés qui, à défaut de pouvoir se reposer ou dormir, inventent alors de nouvelles façon d’être <i>anonymement-seuls-ensemble</i>. Si nous sommes par défaut toujours interconnecté·es, l’expérience des états de veille permet de se soustraire temporairement à ces multiples injonctions de participation. Ces bulles d’absence et de désengagement ouvrent un espace-temps <i>toujours en même temps déjà-là</i>, qui rend possible une certaine forme d’inanimité. De la fusion des termes d’inanimé et d’intimité, l’inanimité nous permet de se détacher de la pression d’être soi, ou d’être quelqu’un. Cela nous empêche de stabiliser des états définis, calqués sur les catégories modernes de sujet — objet, humain — machine, naturel — artificiel. Nos états de veille constituent ainsi une infrastructure affective, qui peut rester diffuse, ambiante, irréalisée, mais qui permet néanmoins de se charger d’un certain potentiel.  </p>
+
+				<p class="quote" id="definition"> Les veilleur·ses qui hantent nos plateformes opèrent ainsi au seuil des processus inconscients d’extraction de l’information et de l’énergie. Alors que la connectivité est devenue la «&nbspbase infrastructurelle de la vie quotidienne&nbsp»<a href="#jacoba" aria-describedby="footnote-label" id="footnotes-ref"></a>, veiller ou être en veille rend possible des effets de dismédiations<a href="#mills" aria-describedby="footnote-label" id="footnotes-ref"></a>, pour faire l’expérience de modes de communication incomplets et discontinus, et repenser des rythmes et des continuums avec des dissonances.</p>
+
+				<p class="quote" id="definition"> À l’intersection des sphères médiatiques, somatiques et socio-politiques, nos états de veille nous permettent de prendre la mesure des états de fatigue et d’éveil, de présence et d’absence, d’activité et d’oisiveté qui constituent nos expériences en ligne et hors-ligne. Ils permettent de dévoiler certaines intimités qui parviennent à circuler à travers et par-delà les filtres et barrages d'Internet. Ces flux tracent les contours d’une certaine techno-sensibilité, connectée et distribuée, qui opère à travers des arrangements plus-qu'-humains. Partager nos états de veille alourdit notre capacité à nous précipiter vers des solutions et nous obligent à écouter le présent. </p>
+			</div>	 
+  		</article>
+		</div>
+
+
+
+	</main>
+
+
+	<script src="js/flo.js"></script>
+
+	<script src="js/background-color.js"></script>
+	<script src="js/now.js"></script>
+
+	<!--<script src="usercount-rayon.js"></script>-->
+
+</body>
+</html>

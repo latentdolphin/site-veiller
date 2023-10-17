@@ -1,0 +1,384 @@
+:root{
+	--start-seconds: 57;
+	--start-minutes: 45;
+	--start-hours: 11;
+}
+
+@font-face {
+    font-family: 'Neue Machina';
+    src: url('font/NeueMachina/NeueMachina-Regular.woff2') format('woff2'),
+        url('font/NeueMachina/NeueMachina-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inferi Book';
+    src: url('font/Inferi/Inferi-Book.woff2') format('woff2'),
+        url('font/Inferi/Inferi-Book.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+body{
+	/*background-color:green;*/
+	/*color:black;
+	overflow-: hidden;*/
+	font-family: 'Neue Machina';
+	width:auto;
+	margin:0;
+}
+
+p{
+	color:#faf5f4;
+}
+
+
+
+
+.rayon-user {
+	/*height: 300vh;*/
+	width: 100%;
+	height:4vh;
+	margin:auto;
+	padding:auto;
+	/*top:50px;*/
+	animation: 4s linear 0s infinite alternate vapor;
+	/*z-index:2000;*/
+	color:#a17c21;
+	position:absolute;
+	background: rgb(2,0,36);
+	background: linear-gradient(0deg, rgba(2,0,36,0) 0%, rgba(161,124,33,1) 50%, rgba(161,124,33,0) 100%);
+
+
+}
+
+
+
+
+
+
+.header{
+	position:fixed;
+	z-index: 100;
+	/*background-color:yellow;*/
+	width:100%;
+	height: auto;
+}
+
+.title{
+	/*background-color:pink;*/
+	/*grid-row-start: 1; 
+	grid-row-start: 2fr; */
+	color:#a17c21;
+	font-size: 15pt;
+	padding-left:3vw;
+	position:fixed;
+	text-align:center;
+}
+
+.container-horloge{
+	/*background-color:pink;
+	max-height:100%;
+	width:100%;*/
+	padding-left:7vw;
+	/*padding-top:2vh;*/
+	margin:0;
+	position:fixed;
+	/*text-align:center;*/
+	/*opacity:50%;*/	
+}
+
+.heure-temp{
+	/*background-color:yellow;*/
+	font-family: 'Inferi Book';
+	font-size: 38pt;
+	padding:0;
+	margin:0;
+	color:#a17c21;
+	float:right;
+	line-height: 0.8;
+	/*position:fixed-;*/
+	padding-right:2vw;
+	padding-top:1vw;
+	/*grid-row-start: 1; 
+	grid-column-start: 6; 
+	/*grid-column-end: 12; */
+}
+
+.gamme-couleur{
+	width: 10px;
+	height: 290px;
+	float:right;
+	padding:0;
+	margin:0;
+
+}
+
+	#blue{
+		background-color: #e3e8f7;
+		height:150px;
+
+	}
+
+	#beige{
+		background-color: #fbe5d1;
+		height:42px;
+
+	}
+
+	#beige2{
+		background-color: #f0a05a;
+		height:22px;
+
+	}
+
+	#orange{
+		background-color: #ee8740;
+		height:22px;
+
+	}
+
+	#rouge{
+		background-color: #c63710;
+		height:22px;
+
+	}
+
+	#bronze{
+		background-color: #a17c21;
+		height:22px;
+
+	}
+
+
+
+/* FOND DU ROND */
+.oval {
+  fill: #a17c21;
+  /* fill: #faf5f4; */
+  stroke:transparent;
+  z-index: 1000;
+}
+
+/* COULEUR DU CHEMIN */
+.path {
+  fill: none;
+  stroke: #a17c21;
+  color: #a17c21;
+}
+
+
+
+
+
+#schema-temp {
+	/*background-color:blue;*/
+	width:900px;
+	height:300px;
+	padding:1vw;
+	z-index: 1000;
+	position:fixed;
+
+
+
+	stroke: #a17c21;
+	stroke-width: 1;
+	stroke-linecap: round;
+	fill:none;
+}
+
+
+#horloge {
+
+	--start-seconds: 57;
+	--start-minutes: 45;
+	--start-hours: 11;
+	/*background-color:yellow;*/
+	margin: auto;
+	width:300px;
+	height:300px;
+	position: fixed;
+	stroke-width: 8;
+	stroke-linecap: round;
+	transform: rotate(-90deg);
+	/*stroke: #faf5f4;*/
+}
+
+	.minute,
+	.hour {
+		transform: translate(20px, 20px) rotate(0deg);
+	}
+		
+
+	.minute {
+		stroke-width: 0.2;
+		stroke: #a17c21;
+			/*transform: translate(20px, 20px) rotate(calc(var(--start-minutes) * 6deg));
+			animation: rotateMinuteHand 3600s steps(60) infinite;
+ 			animation-delay: calc(var(--start-seconds) * -1 * 1s);*/
+		}
+
+			@keyframes rotateMinuteHand {
+  				from {
+					transform: translate(20px, 20px) rotate(calc(var(--start-minutes) * 6deg));
+				}
+				to {
+					transform: translate(20px, 20px) rotate(calc(var(--start-minutes) * 6deg + 360deg));
+				}
+			}
+
+	.hour {
+		stroke-width: 0.2;
+		stroke: #a17c21;
+			/*transform: translate(20px, 20px) rotate(calc(var(--start-hours) * 30deg));
+			animation: rotateHourHand calc(12 * 60 * 60s) linear infinite;
+ 			animation-delay: calc(calc(var(--start-minutes) * -60 * 1s) + calc(var(--start-seconds) * -1 * 1s));*/
+		}
+
+			@keyframes rotateHourHand {
+  				from {
+					transform: translate(20px, 20px) rotate(calc(var(--start-hours) * 30deg));
+				}
+				to {
+					transform: translate(20px, 20px) rotate(calc(var(--start-hours) * 30deg + 360deg));
+				}
+			}
+
+#schema-temp{
+	color:blue;
+	width:100%;
+	position:absolute;
+	z-index:500;
+
+}
+
+.grid-container{
+	width:100%;
+	top:3vh;
+	/*background-color:green;*/
+	display:grid;
+	grid-template-rows: 20vh 300vh;
+	grid-template-columns: 2fr 2fr 2fr 2fr 3fr 2fr ;
+	grid-gap: 12px;
+	z-index:0;
+}
+
+
+.grid-general{
+	color:white;
+	margin-top:20vh;
+	padding-left:1.5vw;
+	padding-right:1.2vw;
+	font-size: 10pt;
+}
+
+		#grid-item1{
+			/*background: blue;*/
+			grid-row-start: 2; 
+		}
+
+		#grid-item2{
+			/*background: red;*/
+			grid-row-start: 2; 
+		}
+
+		#grid-item3{
+			/*background: blue;*/
+			grid-row-start: 2; 
+					}
+
+		#grid-item4{
+			/*background: red;*/
+			grid-row-start: 2; 
+					}
+
+		#grid-item5{
+			/*background: red;*/
+			grid-row-start: 3; 
+		}
+
+		#grid-item-roman-photo{
+			/*background: blue;*/
+			width:100%;
+			grid-row-start: 2; 
+			/*grid-column-start: 8; 
+		  	grid-column-end: 10; */
+		}
+
+		.img-roman-photo{
+				width:100%;
+			}
+
+
+		#grid-item6{
+			/*background: red;*/
+			grid-row-start: 2; 		
+		}
+
+.black{
+	background: #000;
+	color: orange;
+}
+
+#bg{
+	color:pink;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top:0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+}
+
+#gradient{
+	/*height: 300vh;*/
+	width: 100%;
+	animation: 4s linear 0s infinite alternate vapor;
+	z-index:0;
+}
+
+.usercount{
+	color:black;
+}
+
+
+
+/* LA NUIT INTERRUPTION */
+#fond_nuit{
+	background-color: black;
+	width:100vw;
+	height:100vh;
+	position:fixed;
+}
+
+.container-horloge-nuit{
+	stroke:#a17c21;
+}
+
+
+
+
+@keyframes vapor {
+	from {
+		transform: scaleY(1);
+	}
+	50%{
+		transform: scaleY(1.1);
+	} 
+	to {
+		transform: scaleY(1);
+	}
+}
+
+
+main{
+	position: relative;
+	margin:0
+	padding:0;
+}

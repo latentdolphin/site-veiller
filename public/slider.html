@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style>
+
+		body{
+			margin: 0;
+		}
+		
+
+		/* FOND DU ROND */
+		.oval {
+		  fill: #000;
+		  color:#ee7540;
+		}
+
+		/* COULEUR DU CHEMIN */
+		.path {
+		  fill: none;
+		  stroke: #000;
+		  color: #ee7540;
+		}
+
+		#horaire{
+			font-size: 2em;
+			font-family: sans-serif;
+			padding: 10px;
+		}
+
+	
+
+	</style>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/utils/Draggable.min.js"></script>
+</head>
+<body>
+
+	<!-- https://la-cascade.io/rendre-svg-responsif/ -->
+		<!-- width="1000" height="300" -->
+		<!-- CF http://thenewcode.com/744/Make-SVG-Responsive -->
+	  <svg version="1.1" viewBox="-10 -10 1020 320" class="svg-content">
+
+		<path id="path" class="path" d="M1726.52,241.67h-417.31c-8.31,0-16.05-4.26-20.5-11.28l-72.7-114.79c-4.45-7.02-12.18-11.28-20.5-11.28
+	h-105.73c-8.13,0-15.72-4.07-20.22-10.85l-54.51-82.13c-4.5-6.77-12.09-10.85-20.22-10.85H440.67c-5.68,0-11.18,1.99-15.54,5.63
+	L294.99,114.72c-4.36,3.64-9.86,5.63-15.54,5.63H153.43c-5.7,0-11.22,2.01-15.59,5.67L40.71,233.66c-4.6,5.1-11.15,8.01-18.01,8.01
+	H0"/>
+
+
+
+	
+
+	    <g id="drag">
+	      <circle class="oval" cx="8" cy="8" r="8" />
+	    </g>
+	  </svg>
+
+	  <p id="horaire">00:00:00</p>
+
+
+
+
+	<script type="text/javascript">
+			
+		// Closest Point on Path
+		// https://bl.ocks.org/mbostock/8027637
+
+		var DEG = 180 / Math.PI;
+
+		var drag = document.querySelector("#drag");
+		var path = document.querySelector("#path");
+
+		var pathLength = path.getTotalLength() || 0;
+		var startPoint = path.getPointAtLength(0);
+		var startAngle = getRotation(startPoint, path.getPointAtLength(0.1));
+
+		TweenLite.set(drag, {
+		  transformOrigin: "center",
+		  rotation: startAngle + "_rad",
+		  xPercent: -50,
+		  yPercent: -50,
+		  x: startPoint.x,
+		  y: startPoint.y
+		});
+
+		var draggable = new Draggable(drag, {  
+		  liveSnap: {
+		    points: pointModifier
+		  }
+		});
+
+		TweenLite.set(".container", {
+		  autoAlpha: 1
+		});
+
+		function pointModifier(point) {
+		  
+		  var p = closestPoint(path, pathLength, point);
+		    
+		  TweenLite.set(drag, {
+		    rotation: p.rotation
+		  });
+
+		  coordToTime(p.point)
+		  
+		  return p.point;
+		}
+
+		// FONCTION utlisée pour faire la correposndance entre x (en pixels) et horaire (en secondes) 
+		// la largeur du SVG ne dépend pas de la largeur de la fenetre (car responsive)
+		// elle est calculée en fonction du système de coordonnées du SVG (1000 px de large)
+		function coordToTime(point){
+			// console.log("coords", point.x, point.y)
+
+			// regle de 3
+			// 24h * 60 min * 60 sec
+			let time = Math.round(point.x * (24 * 60 * 60 - 3600) / 1000) 
+			// * 1000 pour l'avoir en millisecondes
+			let d = new Date(time * 1000)
+
+			// à ajuster 
+			// cf https://www.lightingtutor.com/kelvin-color-temperature/
+			let minTemp = 2700 // 2700
+			let maxTemp = 7400 // 6500
+			// 185 = hauteur du tracé
+			let kelvin = Math.round(point.y * (maxTemp - minTemp) / 185) + minTemp
+
+			// console.log(time)
+			// console.log(d.getHours(), d.getMinutes(), d.getSeconds() )
+
+			// krgb = kelvin_to_rgb(kelvin)
+			krgb = kelvinToRGB(kelvin)
+			console.log("temp", kelvin, krgb)
+
+			document.body.style.background = `rgb(${krgb[0]},${krgb[1]},${krgb[2]})`;
+
+			document.getElementById('horaire').innerHTML = `${pad(d.getHours(),2)}:${pad(d.getMinutes(),2)}:${pad(d.getSeconds(),2)}`
+
+			// document.body.style.background = `rgb(${krgb.r},${krgb.g},${krgb.b})`;
+		}
+
+		// pour ajouter des éros devant des nombres
+		function pad(num, size) {
+		    num = num.toString();
+		    while (num.length < size) num = "0" + num;
+		    return num;
+		}
+
+		// CF https://github.com/mattdesl/kelvin-to-rgb
+		// https://github.com/mattdesl/kelvin-to-rgb/blob/master/index.js
+		function kelvinToRGB (temp, out) {
+		  if (!Array.isArray(out)) {
+		    out = [0, 0, 0]
+		  }
+
+		  temp = temp / 100
+		  var red, blue, green
+
+		  if (temp <= 66) {
+		    red = 255
+		  } else {
+		    red = temp - 60
+		    red = 329.698727466 * Math.pow(red, -0.1332047592)
+		    if (red < 0) {
+		      red = 0
+		    }
+		    if (red > 255) {
+		      red = 255
+		    }
+		  }
+
+		  if (temp <= 66) {
+		    green = temp
+		    green = 99.4708025861 * Math.log(green) - 161.1195681661
+		    if (green < 0) {
+		      green = 0
+		    }
+		    if (green > 255) {
+		      green = 255
+		    }
+		  } else {
+		    green = temp - 60
+		    green = 288.1221695283 * Math.pow(green, -0.0755148492)
+		    if (green < 0) {
+		      green = 0
+		    }
+		    if (green > 255) {
+		      green = 255
+		    }
+		  }
+
+		  if (temp >= 66) {
+		    blue = 255
+		  } else {
+		    if (temp <= 19) {
+		      blue = 0
+		    } else {
+		      blue = temp - 10
+		      blue = 138.5177312231 * Math.log(blue) - 305.0447927307
+		      if (blue < 0) {
+		        blue = 0
+		      }
+		      if (blue > 255) {
+		        blue = 255
+		      }
+		    }
+		  }
+
+		  out[0] = Math.floor(red)
+		  out[1] = Math.floor(green)
+		  out[2] = Math.floor(blue)
+		  return out
+		}
+
+
+		////// END kelvinToRGB
+
+		function closestPoint(pathNode, pathLength, point) {
+		  
+		  var precision = 8,
+		      best,
+		      bestLength,
+		      bestDistance = Infinity;
+
+		  // linear scan for coarse approximation
+		  for (var scan, scanLength = 0, scanDistance; scanLength <= pathLength; scanLength += precision) {
+		    if ((scanDistance = distance2(scan = pathNode.getPointAtLength(scanLength))) < bestDistance) {
+		      best = scan, bestLength = scanLength, bestDistance = scanDistance;
+		    }
+		  }  
+		  
+		  // binary search for precise estimate
+		  precision /= 2;
+		  while (precision > 0.5) {
+		    var before,
+		        after,
+		        beforeLength,
+		        afterLength,
+		        beforeDistance,
+		        afterDistance;
+		    if ((beforeLength = bestLength - precision) >= 0 && (beforeDistance = distance2(before = pathNode.getPointAtLength(beforeLength))) < bestDistance) {
+		      best = before, bestLength = beforeLength, bestDistance = beforeDistance;
+		    } else if ((afterLength = bestLength + precision) <= pathLength && (afterDistance = distance2(after = pathNode.getPointAtLength(afterLength))) < bestDistance) {
+		      best = after, bestLength = afterLength, bestDistance = afterDistance;
+		    } else {
+		      precision /= 2;
+		    }
+		  }
+
+		  var len2 = bestLength + (bestLength === pathLength ? -0.1 : 0.1);
+		  var rotation = getRotation(best, pathNode.getPointAtLength(len2));
+		    
+		  return {
+		    point: best,
+		    rotation: rotation * DEG,
+		    // distance: Math.sqrt(bestDistance),
+		  };
+
+		  function distance2(p) {
+		    var dx = p.x - point.x,
+		        dy = p.y - point.y;
+		    return dx * dx + dy * dy;
+		  }
+		}
+
+		function getRotation(p1, p2) {
+		  var dx = p2.x - p1.x;
+		  var dy = p2.y - p1.y;
+		  return Math.atan2(dy, dx);
+		}
+
+
+
+
+	</script>
+	
+</body>
+</html>
